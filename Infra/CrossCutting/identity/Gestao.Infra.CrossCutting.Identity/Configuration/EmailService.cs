@@ -1,0 +1,42 @@
+﻿using Microsoft.AspNet.Identity;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Mime;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
+
+namespace Gestao.Infra.CrossCutting.Identity.Configuration
+{
+    public class EmailService : IIdentityMessageService
+    {
+        public Task SendAsync(IdentityMessage message)
+        {
+            // Habilitar o envio de e-mail
+            if (false)
+            {
+                var text = HttpUtility.HtmlEncode(message.Body);
+
+                var msg = new MailMessage { From = new MailAddress("admin@portal.com.br", "Admin do Portal") };
+
+                msg.To.Add(new MailAddress(message.Destination));
+                msg.Subject = message.Subject;
+                msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Plain));
+                msg.AlternateViews.Add(AlternateView.CreateAlternateViewFromString(text, null, MediaTypeNames.Text.Html));
+
+                var smtpClient = new SmtpClient("smtp.provedor.com", Convert.ToInt32(587));
+                var credentials = new NetworkCredential(ConfigurationManager.AppSettings["ContaDeEmail"],
+                    ConfigurationManager.AppSettings["SenhaEmail"]);
+                smtpClient.Credentials = credentials;
+                smtpClient.EnableSsl = true;
+                smtpClient.Send(msg);
+            }
+
+            return Task.FromResult(0);
+        }
+    }
+}
