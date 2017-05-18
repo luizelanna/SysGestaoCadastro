@@ -1,6 +1,7 @@
 ﻿using System;
 using Gestao.Infra.CrossCutting.Identity.Model;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security.DataProtection;
 
@@ -51,7 +52,7 @@ namespace Gestao.Infra.CrossCutting.Identity.Configuration
             // Definindo a classe de serviço de SMS
             //SmsService = new SmsService();
 
-            var provider = new DpapiDataProtectionProvider("Eduardo");
+            var provider = new DpapiDataProtectionProvider("Luiz");
             var dataProtector = provider.Create("ASP.NET Identity");
 
             UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtector);

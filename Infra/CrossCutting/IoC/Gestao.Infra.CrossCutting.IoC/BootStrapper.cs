@@ -2,10 +2,7 @@
 using Gestao.Infra.CrossCutting.Identity.Configuration;
 using Gestao.Infra.CrossCutting.Identity.Context;
 using Gestao.Infra.CrossCutting.Identity.Model;
-using Gestao.Infra.Data.Context;
-using Gestao.Infra.Data.Interfaces;
 using Gestao.Infra.Data.Repositories;
-using Gestao.Infra.Data.UnitOdWork;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SimpleInjector;
@@ -24,18 +21,21 @@ namespace Gestao.Infra.CrossCutting.IoC
             //container.Register<IPessoaService, PessoaService>(Lifestyle.Scoped);
             //container.Register<IUsuarioService, UsuarioService>(Lifestyle.Scoped);
 
-            container.Register<GestaoContext>(Lifestyle.Scoped);
-            container.Register<IUnitOfWork, EfUnitOfWork>(Lifestyle.Scoped);
+            //container.Register<GestaoContext>(Lifestyle.Scoped);
+            //container.Register<IUnitOfWork, EfUnitOfWork>(Lifestyle.Scoped);
 
 
-            container.Register(typeof(IRepositoryBase<>), typeof(RepositoryBase<>), Lifestyle.Scoped);
+            //container.Register(typeof(IRepositoryBase<>), typeof(RepositoryBase<>), Lifestyle.Scoped);
 
-            //container.Register<ApplicationDbContext>();
+            container.Register<ApplicationDbContext>();
             container.Register<IUserStore<ApplicationUser>>(() => new UserStore<ApplicationUser>(new ApplicationDbContext()));
             container.Register<IRoleStore<IdentityRole, string>>(() => new RoleStore<IdentityRole>());
             container.Register<ApplicationRoleManager>();
             container.Register<ApplicationUserManager>();
+
             container.Register<ApplicationSignInManager>();
+
+
 
             //container.Register<IUsuarioRepository, UsuarioRepository>(Lifestyle.Scoped);
             //container.Register<IPessoaRepository, PessoaRepositoty>(Lifestyle.Scoped);

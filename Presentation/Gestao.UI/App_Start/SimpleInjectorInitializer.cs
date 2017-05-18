@@ -1,24 +1,46 @@
-ï»¿using System.Reflection;
+using System.Reflection;
+using System.Web;
 using System.Web.Mvc;
 using SimpleInjector;
 using SimpleInjector.Integration.Web;
 using SimpleInjector.Integration.Web.Mvc;
 using Gestao.Infra.CrossCutting.IoC;
-using Gestao.UI.App_Start;
+using Microsoft.Owin;
+using SimpleInjector.Advanced;
 
-[assembly: WebActivatorEx.PostApplicationStartMethod(typeof(SimpleInjectorInitializer), "Initialize")]
+[assembly: WebActivator.PostApplicationStartMethod(typeof(Gestao.UI.App_Start.SimpleInjectorInitializer), "Initialize")]
 
 namespace Gestao.UI.App_Start
 {
     public static class SimpleInjectorInitializer
     {
-        /// <summary>Initialize the container and register it as MVC3 Dependency Resolver.</summary>
         public static void Initialize()
         {
             var container = new Container();
             container.Options.DefaultScopedLifestyle = new WebRequestLifestyle();
 
+            // Chamada dos módulos do Simple Injector
             InitializeContainer(container);
+
+            // Necessário para registrar o ambiente do Owin que é dependência do Identity
+            // Feito fora da camada de IoC para não levar o System.Web para fora
+            container.RegisterPerWebRequest(() =>
+            {
+                if (HttpContext.Current != null && HttpContext.Current.Items["owin.Environment"] == null && container.IsVerifying())
+                {
+                    return new OwinContext().Authentication;
+                }
+                return HttpContext.Current.GetOwinContext().Authentication;
+
+            });
+
+            //container.Register<HttpContextBase>(() =>
+            //{
+            //    var context = HttpContext.Current;
+            //    if (context == null && container.IsVerifying)
+            //        return new FakeHttpContext();
+            //    return new HttpContextWrapper(context);
+            //},Lifestyle.Scoped);
 
             container.RegisterMvcControllers(Assembly.GetExecutingAssembly());
 
@@ -26,6 +48,8 @@ namespace Gestao.UI.App_Start
 
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
         }
+
+        public class FakeHttpContext : HttpContextBase { }
 
         private static void InitializeContainer(Container container)
         {

@@ -1,7 +1,9 @@
-﻿using Microsoft.Owin;
+﻿using Gestao.UI;
+using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartupAttribute(typeof(Gestao.UI.Startup))]
+[assembly: OwinStartup(typeof(Startup))]
+//[assembly: OwinStartupAttribute(typeof(Gestao.UI.Startup))]
 namespace Gestao.UI
 {
     public partial class Startup

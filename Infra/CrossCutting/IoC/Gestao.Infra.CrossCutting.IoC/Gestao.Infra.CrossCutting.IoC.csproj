@@ -42,8 +42,12 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleInjector, Version=3.2.0.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
-      <HintPath>..\..\..\..\packages\SimpleInjector.3.2.0\lib\net45\SimpleInjector.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleInjector, Version=3.0.5.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\packages\SimpleInjector.3.0.5\lib\net45\SimpleInjector.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -60,6 +64,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Application\Gestao.Application\Gestao.Application.csproj">
+      <Project>{1e68ab10-a62f-4125-b4d1-15b3d4076f55}</Project>
+      <Name>Gestao.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\..\Domain\Gestao.Domain\Gestao.Domain.csproj">
       <Project>{08DDC969-5F27-4E6F-8922-8487331C3970}</Project>
       <Name>Gestao.Domain</Name>
@@ -68,8 +76,16 @@
       <Project>{261EF1A5-F9AC-45F7-A683-FD167F242635}</Project>
       <Name>Gestao.Infra.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\Gestao.Infra.CrossCutting.Common\Gestao.Infra.CrossCutting.Common.csproj">
+      <Project>{2d4a98cd-3457-4bb6-b442-6f7449c747a3}</Project>
+      <Name>Gestao.Infra.CrossCutting.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Filters\Gestao.Infra.CrossCutting.Filters\Gestao.Infra.CrossCutting.Filters.csproj">
+      <Project>{a47b11f0-a8c6-4471-82a6-b47803622f9b}</Project>
+      <Name>Gestao.Infra.CrossCutting.Filters</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\identity\Gestao.Infra.CrossCutting.Identity\Gestao.Infra.CrossCutting.Identity.csproj">
-      <Project>{F1A920A8-581D-42D8-9943-EA231EB815C4}</Project>
+      <Project>{f1a920a8-581d-42d8-9943-ea231eb815c4}</Project>
       <Name>Gestao.Infra.CrossCutting.Identity</Name>
     </ProjectReference>
   </ItemGroup>
